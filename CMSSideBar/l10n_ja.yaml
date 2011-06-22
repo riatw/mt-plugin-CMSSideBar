@@ -1,0 +1,29 @@
+company_name: 会社名
+company_top: 代表者名
+company_zip: 郵便番号
+company_address: 住所
+company_latlng: 緯度経度
+company_tel: TEL
+company_fax: FAX
+company_mail: E-Mail
+company_time: 営業時間
+company_holiday: 定休日
+company_otherdata: その他
+company_color_main: メイン色
+company_color_sub: サブ色
+company_color_bgcolor: 背景色
+company_title: サイトタイトル
+company_keywords: キーワード
+company_description: 概要文
+company_twitterid: TwitterID
+company_current_holiday: 今月の定休日
+company_next_holiday: 来月の定休日
+company_contactform: 項目設定
+company_qrcode: QRコードのURL
+Edit SiteData: 基本情報設定
+Edit Inquiry: お問い合わせフォーム設定
+Company Description: 会社概要
+Company ColorPicker: サイトの基本色設定
+Company SEO: サイトのタイトル、概要、キーワードの設定
+Company Twitter: Twitter設定
+Company Days: カレンダー設定
