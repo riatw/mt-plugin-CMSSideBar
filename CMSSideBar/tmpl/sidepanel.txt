@@ -14,120 +14,52 @@
 <!--Javascript書いたり -->
 <script type="text/javascript">
 jQuery(function($) {
-		$.ajaxSetup({ cache: true }); //false
-		$.ajaxSetup({ ifModified: true });
-						
-		//index_new.html(仮公開トップがあれば、そこへリンクする
-		$.ajax({
-		url: "/index_new.html",
-		method: "get",
-		dataType: "text",
-		success: function(data, dataType) {
-			$("#menu ul li.viewsite a").attr("href","/index_new.html");
-			$('#view-site a').attr("href","/index_new.html");
-		}
-		});
-		
-		//rollover　rollover.jsから引用
-		$("#menu ul li a img").each(function(){
-			var imgSrc = $(this).attr('src');
-			//smartRollover
-			if(imgSrc.match(/(.*)_off(\..*)/)){
-				var repSrc = RegExp.$1+'_on'+RegExp.$2;
-				$('<img />').attr('src',repSrc);
-				$(this).hover(function(){
-					$(this).attr('src',repSrc);
-					$(this).css({opacity: '1',filter: 'alpha(opacity=100)'});
-				},function(){
-					$(this).attr('src',imgSrc);
-				});
-			//ロールオーバーが無い場合は、透明度80%
-			}else if(!$(this).hasClass('not')){
-				$(this).hover(function(){
-						$(this).css({
-							opacity: '0.8',
-							filter: 'alpha(opacity=80)'
-						});
-				},function(){
-						$(this).css({
-							opacity: '1.0',
-							filter: 'alpha(opacity=100)'
-						});
-				}
-				
-				);
-			}
-		});
-
-		//***ブログのロール状況の判別***//
-		//カテゴリーの権限があり、SortCatFldがインストールされているか（されていれば1以上がセットされる）
-		catsortflag = $('#blog-wide-menu li a span:contains("カテゴリとブログ記事")').length;
-		//SortEntriesがインストールされているか（されていれば1以上がセットされる）
-		sortentriesflag = $('#blog-wide-menu li a span:contains("ブログ記事グループ")').length;
-
-		if(catsortflag < 1){
-			$("#menu div#nav ul li.catsort").hide();
-		}
-		if(sortentriesflag < 1){
-			$("#menu div#nav ul li.group").hide();
-		}
-
 });
 </script>
 
-<ul id="cmssidebar" style="position:relative">
-<li>
-<a href="/mt/mt.cgi?__mode=view&amp;_type=entry&amp;blog_id=<MTBlogID>">
-<img src="/mt/plugins/CMSSideBar/sidepanel/cp_btn01_m_off.jpg" />
-</a>
-</li>
-<li>
-<a href="/mt/mt.cgi?__mode=list_entry&amp;blog_id=<MTBlogID>">
-<img src="/mt/plugins/CMSSideBar/sidepanel/cp_btn02_m_off.jpg" />
-</a>
-</li>
-<li>
-<a href="#" onclick="window.open('/mt/mt.cgi?__mode=quick_rebuild_all&blog_id=1', 'rebuild', 'width=400,height=300,resizable=yes');" class="last-child">
-<img src="/mt/plugins/CMSSideBar/sidepanel/cp_btn03_m_off.jpg" />
-</a>
-</li>
-<mt:if name="can_edit_categories">
-<li class="cat">
-<a href="/mt/mt.cgi?__mode=list_category&blog_id=<MTBlogID>">
-<img src="/mt/plugins/CMSSideBar/sidepanel/cp_btn04_m.jpg" />
-</a>
-</li>
-</mt:if>
-<mt:ignore> /* supersort
-<li class="cat">
-<a href="/mt/mt.cgi?__mode=fjss_sort_order&type=category&blog_id=<MTBlogID>">
-<img src="/mt/plugins/CMSSideBar/sidepanel/cp_btn04_01_m.jpg" />
-</a>
-</li>
-</mt:ignore>
-<li class="assets">
-<a href="/mt/mt.cgi?__mode=list_asset&blog_id=<MTBlogID>">
-<img src="/mt/plugins/CMSSideBar/sidepanel/cp_btn06_m.jpg" />
-</a>
-</li>
-<mt:ignore>MTSortEntriesを使うブログIDだけここに列挙する
-<MTIf name="blog_id" eq="2">
-<li class="group">
-<a href="/mt/mt.cgi?__mode=edit_sortentries&blog_id=2&id=1">
-<img src="/mt/plugins/CMSSideBar/sidepanel/cp_btn07_m.jpg" />
-</a>
-</li>
-</MTIf>
-</mt:ignore>
-<li class="viewsite">
-<a href="/" target="_blank">
-<img src="/mt/plugins/CMSSideBar/sidepanel/cp_btn05_m.jpg" />
-</a>
-</li>
-<li>
-<a href="/mt/mt.cgi?__mode=dashboard">
-<img src="/mt/plugins/CMSSideBar/sidepanel/cp_btn00_m.jpg" />
-</a>
-</li>
+<ul id="original-wide-menu" class="menu-nav">
+	<MTBlogs include_blogs="$blog_id">
+	<MTTopLevelCategories>
+	<li id="menu-<mt:categorybasename>" class="item top-menu">
+		<div class="first-child">
+			<a href="/mt/mt.cgi?__mode=list&_type=entry&blog_id=<MTBlogID>&category_id=<mt:categoryid>" class="top-menu-link menu-link"><span class="menu-label"><mt:categorylabel></span></a><a href="#" class="toggle-button"><img src="/mt/mt-static/images/arrow/arrow-toggle-big.png"></a>
+		</div>
+		<ul class="sub-menu" style="display: block; ">
+			<li class="item">
+				<a href="/mt/mt.cgi?__mode=view&_type=entry&blog_id=<MTBlogID>&category_id=<mt:categoryid>" class="sub-menu-link menu-link"><span class="menu-label">新規</span></a>
+			</li>
+			<li class="item">
+				<a href="/mt/mt.cgi?__mode=list&_type=entry&blog_id=<MTBlogID>&filter=category&filter_val=<mt:categorylabel>" class="sub-menu-link menu-link"><span class="menu-label">一覧</span></a>
+			</li>
+		</ul>
+	</li>
+	</MTTopLevelCategories>
+	<li id="menu-" class="item top-menu top-menu-open active">
+		<div class="first-child">
+			<span class="menu-label">共通</span>
+		</div>
+		<ul class="sub-menu" style="display: block; ">
+			<mt:if name="can_edit_categories">
+			<li class="item">
+				<a href="/mt/mt.cgi?__mode=list&_type=category&blog_id=<MTBlogID>" class="sub-menu-link menu-link"><span class="menu-label">更新箇所</span></a>
+			</li>
+			</mt:if>
+			<li class="item">
+				<a href="/mt/mt.cgi?__mode=list&_type=asset&blog_id=<MTBlogID>" class="sub-menu-link menu-link"><span class="menu-label">画像・写真</span></a>
+			</li>
+			<li class="item">
+				<a href="/mt/mt.cgi?__mode=fjss_sort_order&type=category&blog_id=<MTBlogID>" class="sub-menu-link menu-link"><span class="menu-label">並び順の変更</span></a>
+			</li>
+			<li class="item">
+				<a href="#" onclick="window.open('/mt/mt.cgi?__mode=rebuild_confirm&blog_id=<MTBLogID>', 'rebuild', 'width=400,height=300,resizable=yes');" class="sub-menu-link menu-link"><span class="menu-label">再構築</span></a>
+			</li>
+			<li class="item viewsite">
+				<a href="/" class="sub-menu-link menu-link" target="_blank"><span class="menu-label">サイトを表示</span></a>
+			</li>
+
+		</ul>
+	</li>
+	</MTBlogs>
+
 </ul>
 </MTUnless>
